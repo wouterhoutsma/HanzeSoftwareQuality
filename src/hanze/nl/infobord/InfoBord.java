@@ -81,21 +81,23 @@ public class InfoBord {
 				}
 			}
 		}
-		if(checkRepaint(aantalRegels, aankomsttijden)){
+		int newHash = calculateHashValue(aantalRegels, aankomsttijden);
+		if (newHash != hashValue) {
+			updateHashValue(newHash);
 			repaintInfoBord(infoTekst);
 		}
 	}
-	
-	private boolean checkRepaint(int aantalRegels, int[] aankomsttijden){
-		int totaalTijden=0;
-		for(int i=0; i<aantalRegels;i++){
-			totaalTijden+=aankomsttijden[i];
+
+	private void updateHashValue(int newHash) {
+		hashValue = newHash;
+	}
+
+	private int calculateHashValue(int aantalRegels, int[] aankomstTijden) {
+		int totaalTijden = 0;
+		for (int i = 0; i < aantalRegels; i++) {
+			totaalTijden += aankomstTijden[i];
 		}
-		if(hashValue!=totaalTijden){
-			hashValue=totaalTijden;
-			return true;
-		}
-		return false;
+		return totaalTijden;
 	}
 
 	private void repaintInfoBord(String[] infoTekst){
